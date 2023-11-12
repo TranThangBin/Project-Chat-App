@@ -46,6 +46,7 @@ func GetAllRelationShip(ctx *gin.Context) {
                 ELSE 'stranger'
             END AS 'status'`).
 		Joins("LEFT JOIN friends ON friend_id = id AND user_id = ?", claims.ID).
+		Order("friends.status DESC").
 		Find(&users, "id != ?", claims.ID).
 		Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{

@@ -115,7 +115,7 @@ func Refresh(ctx *gin.Context) {
 		})
 		return
 	}
-	expiredTime := time.Now().Add(accessTokenDuration)
+	expiredTime := claims.ExpiresAt.Time.Add(accessTokenDuration)
 	newCreds, err := service.ClaimsToCreds(&claims, expiredTime)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
