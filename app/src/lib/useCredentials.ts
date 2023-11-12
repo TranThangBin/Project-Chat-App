@@ -1,17 +1,14 @@
-export type Credentials = {
-  jwt: string;
-  expiredAt: number;
-};
+import CredentialsModel from "../model/credentials.model";
 
 export function getCredentials() {
   const creds = localStorage.getItem("credentials");
   if (creds === null) {
     return null;
   }
-  return JSON.parse(creds) as Credentials;
+  return JSON.parse(creds) as CredentialsModel;
 }
 
-export function setCredentials(creds: Credentials) {
+export function setCredentials(creds: CredentialsModel) {
   localStorage.setItem("credentials", JSON.stringify(creds));
 }
 

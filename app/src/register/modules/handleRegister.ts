@@ -20,9 +20,9 @@ export default async (e: Event) => {
     },
     body: JSON.stringify(Object.fromEntries(registerInfo.entries())),
   });
-  if (registerResponse.ok) {
-    window.location.href = "/login/";
-  } else {
+  if (!registerResponse.ok) {
     window.alert("something went wrong");
+    return;
   }
+  window.location.href = "/login/";
 };

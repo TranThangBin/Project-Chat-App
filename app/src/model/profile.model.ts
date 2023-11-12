@@ -1,4 +1,4 @@
-export type ProfileModel = {
+type ProfileModel = {
   firstname: string;
   lastname: string;
   gender: string;
@@ -6,3 +6,4 @@ export type ProfileModel = {
   phonenumber: string;
   createdAt: string;
 };
+export default ProfileModel;

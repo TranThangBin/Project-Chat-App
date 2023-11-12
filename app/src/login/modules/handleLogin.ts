@@ -10,11 +10,10 @@ export default async (e: Event) => {
     },
     body: JSON.stringify(Object.fromEntries(loginInfo.entries())),
   });
-  if (loginResponse.ok) {
-    const creds = (await loginResponse.json()) as Credentials;
-    setCredentials(creds);
-    window.location.href = "/profile/";
-  } else {
+  if (!loginResponse.ok) {
     window.alert("username or password is incorrect");
   }
+  const creds = (await loginResponse.json()) as Credentials;
+  setCredentials(creds);
+  window.location.href = "/profile/";
 };

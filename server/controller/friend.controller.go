@@ -40,13 +40,12 @@ func GetAllRelationShip(ctx *gin.Context) {
 		Select(`id, username, first_name, last_name, email, phone_number, birth_day, users.created_at,
             CASE WHEN gender = 0 THEN 'female' ELSE 'male' END AS gender,
             CASE
-                WHEN friends.status = 0 THEN 'friend'
-                WHEN friends.status = 1 THEN 'sent request'
-                WHEN friends.status = 2 THEN 'recieved request'
+                WHEN status = 0 THEN 'friend'
+                WHEN status = 1 THEN 'sent request'
+                WHEN status = 2 THEN 'recieved request'
                 ELSE 'stranger'
-            END AS 'status'`).
+            END AS status`).
 		Joins("LEFT JOIN friends ON friend_id = id AND user_id = ?", claims.ID).
-		Order("friends.status DESC").
 		Find(&users, "id != ?", claims.ID).
 		Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{

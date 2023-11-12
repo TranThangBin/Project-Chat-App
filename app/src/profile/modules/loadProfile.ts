@@ -1,6 +1,5 @@
-import { clearCredentials } from "../../lib/credentials";
-import validateSession from "../../lib/validateSession";
-import { type ProfileModel } from "../../model/profile.model";
+import makeAuthorizedRequest from "../../lib/makeAuthorizedRequest";
+import ProfileModel from "../../model/profile.model";
 
 const fullNameElem: HTMLParagraphElement | null =
   document.querySelector("#full-name");
@@ -11,14 +10,7 @@ const phonenumberElem: HTMLParagraphElement | null =
 const createdAtElem: HTMLParagraphElement | null =
   document.querySelector("#created-at");
 
-export default async () => {
-  const creds = await validateSession();
-  if (creds === null) {
-    window.alert("your session has expired");
-    window.location.href = "/login/";
-    clearCredentials();
-    return;
-  }
+export default makeAuthorizedRequest(async (creds) => {
   const profileRequest = await fetch("http://localhost:8080/auth/profile", {
     method: "GET",
     headers: {
@@ -26,24 +18,26 @@ export default async () => {
       Authorization: `Bearer ${creds.jwt}`,
     },
   });
-  if (profileRequest.ok) {
-    const profile = (await profileRequest.json()) as ProfileModel;
-    if (fullNameElem !== null) {
-      fullNameElem.innerText = [profile.firstname, profile.lastname].join(" ");
-    }
-    if (sexElem !== null) {
-      sexElem.innerText = profile.gender;
-    }
-    if (emailElem !== null) {
-      emailElem.innerText = profile.email;
-    }
-    if (phonenumberElem !== null) {
-      phonenumberElem.innerText = profile.phonenumber;
-    }
-    if (createdAtElem !== null) {
-      createdAtElem.innerText = new Date(profile.createdAt).toLocaleString(
-        "fr-FR",
-      );
-    }
+  if (!profileRequest.ok) {
+    window.alert("something went wrong");
+    return;
   }
-};
+  const profile = (await profileRequest.json()) as ProfileModel;
+  if (fullNameElem !== null) {
+    fullNameElem.innerText = [profile.firstname, profile.lastname].join(" ");
+  }
+  if (sexElem !== null) {
+    sexElem.innerText = profile.gender;
+  }
+  if (emailElem !== null) {
+    emailElem.innerText = profile.email;
+  }
+  if (phonenumberElem !== null) {
+    phonenumberElem.innerText = profile.phonenumber;
+  }
+  if (createdAtElem !== null) {
+    createdAtElem.innerText = new Date(profile.createdAt).toLocaleString(
+      "fr-FR",
+    );
+  }
+});

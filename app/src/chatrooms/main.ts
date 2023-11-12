@@ -1,4 +1,4 @@
 import "/src/index.postcss";
-import validateSession from "../lib/validateSession";
+import makeAuthorizedRequest from "../lib/makeAuthorizedRequest";
 
-window.addEventListener("load", validateSession);
+window.addEventListener("load", makeAuthorizedRequest());
