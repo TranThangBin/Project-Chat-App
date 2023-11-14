@@ -2,10 +2,249 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ChatApp</title>
   </head>
   <body>
+    <div class="flex h-screen">
+      <!--Thông tin các chat room-->
+      <div
+        class="w-1/4 border-2 border-black bg-slate-200 hover:border-blue-400"
+      >
+        <nav class="">
+          <div class="h-1/6">
+            <h1 class="m- my-4 ml-3 w-max text-3xl font-bold text-blue-400">
+              Chats
+            </h1>
+            <button
+              id="btn-toggle-modal"
+              class="absolute float-right ml-8 mt-2 scale-150 transform"
+            >
+              <i class="fa-solid fa-circle-plus"></i>
+            </button>
+            <dialog id="modal">
+              <div class="m-10 flex flex-col items-center justify-center">
+                <div class="mb-4 text-3xl">Thêm phòng chat</div>
+                <input
+                  type="text"
+                  class="mb-4 rounded border px-4 py-2"
+                  placeholder="Nhập tên phòng chat"
+                />
+                <div class="flex justify-center space-x-4">
+                  <button
+                    type="submit"
+                    class="border-whiterounded border-2 bg-blue-500 px-5 py-2 text-white hover:border-2 hover:border-black hover:rounded"
+                  >
+                    ADD
+                  </button>
+                  <button
+                    id="btn-close-modal"
+                    class="rounded border-2 border-white bg-red-500 px-4 py-2 text-white hover:border-2 hover:border-black hover:rounded"
+                  >
+                    Cancle
+                  </button>
+                </div>
+              </div>
+            </dialog>
+            <form class="text-center">
+              <input
+                type="text"
+                placeholder="Search"
+                name="friend-name"
+                class="w-1/2 rounded px-3 py-1 text-black transition hover:border-blue-400"
+              />
+            </form>
+          </div>
+          <div class="border-b-2 border-black">
+            <h2 class="text-center font-bold ">Phòng chat đã được thêm</h2>
+            <ul class="h-2/5 overflow-auto">
+              <li
+                class="my-3 flex w-full items-center rounded p-3 text-black transition duration-100 hover:bg-slate-400"
+              >
+                <img
+                  class="float-left mr-3 h-16 w-16 rounded-[50%] border-2"
+                  src="/images/user.png"
+                  alt=""
+                />
+                <div class="text-blue-400">
+                  <h2 class="">adam</h2>
+                </div>
+              </li>
+              <li
+                class="my-3 flex w-full items-center rounded p-3 text-black transition duration-100 hover:bg-slate-400"
+              >
+                <img
+                  class="float-left mr-3 h-16 w-16 rounded-[50%] border-2"
+                  src="/images/user.png"
+                  alt=""
+                />
+                <div class="text-blue-400">
+                  <h2 class="">adam</h2>
+                </div>
+              </li>
+              <li
+                class="my-3 flex w-full items-center rounded p-3 text-black transition duration-100 hover:bg-slate-400"
+              >
+                <img
+                  class="float-left mr-3 h-16 w-16 rounded-[50%] border-2"
+                  src="/images/user.png"
+                  alt=""
+                />
+                <div class="text-blue-400">
+                  <h2 class="">adam</h2>
+                </div>
+              </li>
+              <li
+                class="my-3 flex w-full items-center rounded p-3 text-black transition duration-100 hover:bg-slate-400"
+              >
+                <img
+                  class="float-left mr-3 h-16 w-16 rounded-[50%] border-2"
+                  src="/images/user.png"
+                  alt=""
+                />
+                <div class="text-blue-400">
+                  <h2 class="">adam</h2>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="mt-4 text-center font-bold">Phòng chat đã được thêm</h2>
+            <ul class="h-2/6 overflow-auto">
+              <li
+                class="my-3 flex w-full items-center rounded p-3 text-black transition duration-100 hover:bg-slate-400"
+              >
+                <img
+                  class="float-left mr-3 h-16 w-16 rounded-[50%] border-2"
+                  src="/images/user.png"
+                  alt=""
+                />
+                <div class="text-blue-400">
+                  <h2 class="">adam</h2>
+                </div>
+              </li>
+              <li
+                class="my-3 flex w-full items-center rounded p-3 text-black transition duration-100 hover:bg-slate-400"
+              >
+                <img
+                  class="float-left mr-3 h-16 w-16 rounded-[50%] border-2"
+                  src="/images/user.png"
+                  alt=""
+                />
+                <div class="text-blue-400">
+                  <h2 class="">adam</h2>
+                </div>
+              </li>
+              <li
+                class="my-3 flex w-full items-center rounded p-3 text-black transition duration-100 hover:bg-slate-400"
+              >
+                <img
+                  class="float-left mr-3 h-16 w-16 rounded-[50%] border-2"
+                  src="/images/user.png"
+                  alt=""
+                />
+                <div class="text-blue-400">
+                  <h2 class="">adam</h2>
+                </div>
+              </li>
+              <li
+                class="my-3 flex w-full items-center rounded p-3 text-black transition duration-100 hover:bg-slate-400"
+              >
+                <img
+                  class="float-left mr-3 h-16 w-16 rounded-[50%] border-2"
+                  src="/images/user.png"
+                  alt=""
+                />
+                <div class="text-blue-400">
+                  <h2 class="">adam</h2>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <!--Chat room-->
+      <div class="w-3/4 rounded-md border-black hover:border-blue-400">
+        <ul>
+          <li
+            class="flex items-center border-2 border-black bg-slate-200 p-3 text-black transition duration-100 hover:border-blue-400 hover:bg-slate-400"
+          >
+            <img
+              class="float-left mr-3 h-16 w-16 rounded-full border-2"
+              src="/images/user.png"
+              alt=""
+            />
+            <div class="text-blue-400">
+              <h2 class="">adam</h2>
+            </div>
+          </li>
+        </ul>
+        <div
+          class="h-4/5 border-2 border-black bg-slate-200 hover:border-blue-400"
+        >
+          <div class="flex h-5/6 flex-col justify-end border">
+            <div class="overflow-auto">
+              <div class="flex items-center">
+                <img
+                  class="ml-2 mt-6 h-8 w-8 rounded-full border"
+                  src="/images/user.png"
+                  alt=""
+                />
+                <div class="p-2">
+                  <p class="text-center opacity-50">Phúc</p>
+                  <p
+                    class="inline-block self-start whitespace-normal rounded bg-white px-2 py-2"
+                  >
+                    Tin nhắn 2
+                  </p>
+                  <br />
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-end p-4">
+                  <div>
+                    <p class="text-center opacity-50">adam</p>
+                    <p
+                      class="inline-block self-start whitespace-normal rounded bg-white px-2 py-2"
+                    >
+                      Tin nhắn 1
+                    </p>
+                    <br />
+                  </div>
+                  <img
+                    class="ml-2 mt-7 h-8 w-8 rounded-full border"
+                    src="/images/user.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-slate-200">
+          <form
+            class=": h-24 border-2 border-black text-center hover:border-blue-400"
+          >
+            <input
+              type="text"
+              placeholder=""
+              name="friend-name"
+              class="texr-xl mt-6 w-1/2 rounded bg-slate-500 px-3 py-2 text-black"
+            />
+            <button
+              type="submit"
+              class="rounded-lg bg-white px-3 py-3 text-black"
+            >
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/chatrooms/main.ts"></script>
   </body>
 </html>
