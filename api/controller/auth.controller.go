@@ -7,8 +7,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"server/model"
-	"server/service"
+	"api/model"
+	"api/service"
 )
 
 type registerRequest struct {

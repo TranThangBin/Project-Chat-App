@@ -9,7 +9,7 @@ import {
 const friendRequestList: HTMLUListElement | null =
   document.querySelector("#request-list");
 
-export default makeAuthorizedRequest(async (creds) => {
+export default makeAuthorizedRequest(async (token) => {
   if (friendRequestList === null) {
     window.alert("missing element #request-list");
     return;
@@ -21,7 +21,7 @@ export default makeAuthorizedRequest(async (creds) => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${creds.jwt}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   if (!friendRequest.ok) {
@@ -39,7 +39,7 @@ export default makeAuthorizedRequest(async (creds) => {
     .filter((friend) => friend.status === "stranger")
     .forEach(loadStranger(friendRequestList));
   document.querySelectorAll("[data-btn-add-friend]").forEach((btn) =>
-    btn.addEventListener("click", createAddFriendHandler(creds), {
+    btn.addEventListener("click", createAddFriendHandler(token), {
       once: true,
     }),
   );
@@ -49,7 +49,7 @@ export default makeAuthorizedRequest(async (creds) => {
     const userID = container.getAttribute("data-user-id");
     acceptBtn?.addEventListener(
       "click",
-      createAcceptFRHandler(container as HTMLDivElement, userID, creds),
+      createAcceptFRHandler(container as HTMLDivElement, userID, token),
       { once: true },
     );
   });

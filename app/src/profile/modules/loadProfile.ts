@@ -10,12 +10,12 @@ const phonenumberElem: HTMLParagraphElement | null =
 const createdAtElem: HTMLParagraphElement | null =
   document.querySelector("#created-at");
 
-export default makeAuthorizedRequest(async (creds) => {
+export default makeAuthorizedRequest(async (token) => {
   const profileRequest = await fetch("http://localhost:8080/auth/profile", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${creds.jwt}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   if (!profileRequest.ok) {

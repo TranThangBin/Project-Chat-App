@@ -5,7 +5,7 @@ import loadFriendTemplate from "./loadFriendTemplate";
 const friendsList: HTMLUListElement | null =
   document.querySelector("#friends-list");
 
-export default makeAuthorizedRequest(async (creds) => {
+export default makeAuthorizedRequest(async (token) => {
   if (friendsList === null) {
     alert("missing element #friend-list");
     return;
@@ -17,7 +17,7 @@ export default makeAuthorizedRequest(async (creds) => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${creds.jwt}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   if (!friendRequest.ok) {

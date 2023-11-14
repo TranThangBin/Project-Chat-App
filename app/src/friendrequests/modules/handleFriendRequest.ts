@@ -1,6 +1,6 @@
 import CredentialsModel from "../../model/credentials.model";
 
-export function createAddFriendHandler(creds: CredentialsModel) {
+export function createAddFriendHandler(token: string) {
   return async (e: Event) => {
     const currentBtn = e.currentTarget as HTMLButtonElement;
     const userID = currentBtn.getAttribute("data-user-id");
@@ -10,7 +10,7 @@ export function createAddFriendHandler(creds: CredentialsModel) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${creds.jwt}`,
+          Authorization: `Bearer ${token}`,
         },
       },
     );
@@ -38,7 +38,7 @@ export function createAddFriendHandler(creds: CredentialsModel) {
 export function createAcceptFRHandler(
   container: HTMLDivElement,
   userID: string | null,
-  creds: CredentialsModel,
+  token: string,
 ) {
   return async () => {
     const acceptFriendRequest = await fetch(
@@ -47,7 +47,7 @@ export function createAcceptFRHandler(
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${creds.jwt}`,
+          Authorization: `Bearer ${token}`,
         },
       },
     );

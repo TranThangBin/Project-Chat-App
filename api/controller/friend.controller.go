@@ -8,8 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
-	"server/model"
-	"server/service"
+	"api/model"
+	"api/service"
 )
 
 type friendRelation struct {

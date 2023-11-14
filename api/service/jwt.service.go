@@ -5,7 +5,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 
-	"server/model"
+	"api/model"
 )
 
 type Claims struct {

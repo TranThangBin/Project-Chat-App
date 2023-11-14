@@ -8,9 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 
-	"server/model"
-	"server/route"
-	"server/service"
+	"api/model"
+	"api/route"
+	"api/service"
 )
 
 var port, username, password, database string

@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"server/service"
+	"api/service"
 )
 
 func Authorize(ctx *gin.Context) {

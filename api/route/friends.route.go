@@ -3,8 +3,8 @@ package route
 import (
 	"github.com/gin-gonic/gin"
 
-	"server/controller"
-	"server/middleware"
+	"api/controller"
+	"api/middleware"
 )
 
 func InitFriendsRoute(r *gin.Engine) {

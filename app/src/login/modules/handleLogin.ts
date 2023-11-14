@@ -1,4 +1,5 @@
-import { Credentials, setCredentials } from "../../lib/credentials";
+import { setCredentials } from "../../lib/useCredentials";
+import CredentialsModel from "../../model/credentials.model";
 
 export default async (e: Event) => {
   e.preventDefault();
@@ -12,8 +13,9 @@ export default async (e: Event) => {
   });
   if (!loginResponse.ok) {
     window.alert("username or password is incorrect");
+    return;
   }
-  const creds = (await loginResponse.json()) as Credentials;
+  const creds = (await loginResponse.json()) as CredentialsModel;
   setCredentials(creds);
   window.location.href = "/profile/";
 };
