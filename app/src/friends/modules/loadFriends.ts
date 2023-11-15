@@ -1,6 +1,7 @@
 import FriendModel from "../../model/friend.model";
 import makeAuthorizedRequest from "../../lib/makeAuthorizedRequest";
 import loadFriendTemplate from "./loadFriendTemplate";
+import createRemoveFriendHandler from "./handleRemoveFriend";
 
 const friendsList: HTMLUListElement | null =
   document.querySelector("#friends-list");
@@ -13,7 +14,7 @@ export default makeAuthorizedRequest(async (token) => {
   while (friendsList.firstChild !== null) {
     friendsList.removeChild(friendsList.firstChild);
   }
-  const friendRequest = await fetch("http://localhost:8080/friends/", {
+  const friendRequest = await fetch("http://localhost:8080/friend", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -28,4 +29,9 @@ export default makeAuthorizedRequest(async (token) => {
   friends
     .filter((friend) => friend.status === "friend")
     .forEach(loadFriendTemplate(friendsList));
+  document.querySelectorAll("[data-btn-remove-friend]").forEach((btn) =>
+    btn.addEventListener("click", createRemoveFriendHandler(token), {
+      once: true,
+    }),
+  );
 });

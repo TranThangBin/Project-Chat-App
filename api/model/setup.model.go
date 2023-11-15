@@ -20,7 +20,7 @@ func ConnectDatabase(username string, password string, dbname string) {
 	}); err != nil {
 		log.Fatal("Failed to connect to the database")
 	}
-	if err = DB.AutoMigrate(&User{}, &Friend{}); err != nil {
+	if err = DB.AutoMigrate(&User{}, &Friend{},&ChatRoom{},&UserChatRoom{}); err != nil {
 		log.Fatal("Failed to migrate tables to the database")
 	}
 }

@@ -4,6 +4,7 @@ import { loadRecievedFR, loadSentFR, loadStranger } from "./loadFRTemplate";
 import {
   createAcceptFRHandler,
   createAddFriendHandler,
+  createRejecctFRHandler,
 } from "./handleFriendRequest";
 
 const friendRequestList: HTMLUListElement | null =
@@ -17,7 +18,7 @@ export default makeAuthorizedRequest(async (token) => {
   while (friendRequestList.firstChild !== null) {
     friendRequestList.removeChild(friendRequestList.firstChild);
   }
-  const friendRequest = await fetch("http://localhost:8080/friends/", {
+  const friendRequest = await fetch("http://localhost:8080/friend", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -46,11 +47,16 @@ export default makeAuthorizedRequest(async (token) => {
   document.querySelectorAll("[data-accept-reject]").forEach((container) => {
     const acceptBtn: HTMLButtonElement | null =
       container.querySelector("[data-btn-accept]");
+    const rejectBtn: HTMLButtonElement | null =
+      container.querySelector("[data-btn-reject]");
     const userID = container.getAttribute("data-user-id");
     acceptBtn?.addEventListener(
       "click",
       createAcceptFRHandler(container as HTMLDivElement, userID, token),
-      { once: true },
+    );
+    rejectBtn?.addEventListener(
+      "click",
+      createRejecctFRHandler(container as HTMLDivElement, userID, token),
     );
   });
 });

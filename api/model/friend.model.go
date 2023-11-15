@@ -10,4 +10,6 @@ type Friend struct {
 	Status    uint `gorm:"type:tinyint"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	User      User `gorm:"foreignKey:UserID"`
+	Friend    User `gorm:"foreignKey:FriendID"`
 }

@@ -30,9 +30,11 @@ export default (friendsList: HTMLUListElement) => (friend: FriendModel) => {
             }</p>
           </div>
           <button
-            class="ml-auto w-24 rounded-md bg-[#1877F2] text-white transition duration-150 hover:bg-[#2980b9] hover:text-black"
+            data-btn-remove-friend
+            data-user-id="${friend.id}"
+            class="ml-auto rounded-md bg-red-600 p-1 text-white transition duration-150 hover:bg-red-500 hover:text-black"
           >
-            Friend
+            Remove Friend
           </button>
         `;
   friendsList.appendChild(listItem);

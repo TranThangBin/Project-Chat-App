@@ -12,7 +12,7 @@ import (
 	"api/service"
 )
 
-type friendRelation struct {
+type friendData struct {
 	ID          uint      `json:"id"`
 	Username    string    `json:"username"`
 	Gender      string    `json:"gender"`
@@ -34,15 +34,18 @@ func GetAllRelationShip(ctx *gin.Context) {
 		return
 	}
 	claims := userClaims.(*service.Claims)
-	users := []friendRelation{}
+	users := []friendData{}
 	if err := model.DB.
 		Model(&model.User{}).
 		Select(`id, username, first_name, last_name, email, phone_number, birth_day, users.created_at,
-            CASE WHEN gender = 0 THEN 'female' ELSE 'male' END AS gender,
-            CASE
-                WHEN status = 0 THEN 'friend'
-                WHEN status = 1 THEN 'sent request'
-                WHEN status = 2 THEN 'recieved request'
+            CASE gender
+                WHEN 0 THEN 'female'
+                ELSE 'male'
+            END AS gender,
+            CASE status
+                WHEN 0 THEN 'friend'
+                WHEN 1 THEN 'sent request'
+                WHEN 2 THEN 'recieved request'
                 ELSE 'stranger'
             END AS status`).
 		Joins("LEFT JOIN friends ON friend_id = id AND user_id = ?", claims.ID).
@@ -122,7 +125,7 @@ func AcceptFriendRequest(ctx *gin.Context) {
 			Status:   2,
 		}).Error; err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "you are not allowed to accept this request",
+			"message": "you are not allowed to do this",
 			"error":   err.Error(),
 		})
 		return
@@ -150,8 +153,62 @@ func AcceptFriendRequest(ctx *gin.Context) {
 		}
 		return nil
 	}); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "something went wrong",
+			"error":   err.Error(),
+		})
+		return
+	}
+	ctx.Status(http.StatusOK)
+}
+
+func RemoveFriend(ctx *gin.Context) {
+	userClaims, exists := ctx.Get("claims")
+	if !exists {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "something went wrong",
+		})
+		return
+	}
+	claims := userClaims.(*service.Claims)
+	friendId, err := strconv.Atoi(ctx.Param("friend-id"))
+	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "request does not exists",
+			"error": err.Error(),
+		})
+		return
+	}
+	if err := model.DB.
+		Where(&model.Friend{
+			UserID:   claims.ID,
+			FriendID: uint(friendId),
+		}).
+		Error; err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": "you are not allowed to do this",
+			"error":   err.Error(),
+		})
+		return
+	}
+	if err := model.DB.Transaction(func(tx *gorm.DB) error {
+		if err := tx.
+			Delete(&model.Friend{
+				UserID:   claims.ID,
+				FriendID: uint(friendId),
+			}).Error; err != nil {
+			return err
+		}
+		if err := tx.
+			Delete(&model.Friend{
+				UserID:   uint(friendId),
+				FriendID: claims.ID,
+			}).Error; err != nil {
+			return err
+		}
+		return nil
+	}); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "something went wrong",
 			"error":   err.Error(),
 		})
 		return

@@ -1,11 +1,9 @@
-import CredentialsModel from "../../model/credentials.model";
-
 export function createAddFriendHandler(token: string) {
   return async (e: Event) => {
     const currentBtn = e.currentTarget as HTMLButtonElement;
     const userID = currentBtn.getAttribute("data-user-id");
     const addFriendRequest = await fetch(
-      `http://localhost:8080/friends/${userID}`,
+      `http://localhost:8080/friend/${userID}`,
       {
         method: "POST",
         headers: {
@@ -42,7 +40,7 @@ export function createAcceptFRHandler(
 ) {
   return async () => {
     const acceptFriendRequest = await fetch(
-      `http://localhost:8080/friends/${userID}`,
+      `http://localhost:8080/friend/${userID}`,
       {
         method: "PATCH",
         headers: {
@@ -56,5 +54,29 @@ export function createAcceptFRHandler(
       return;
     }
     container.innerText = "You are now friend";
+  };
+}
+
+export function createRejecctFRHandler(
+  container: HTMLDivElement,
+  userID: string | null,
+  token: string,
+) {
+  return async () => {
+    const rejectFriendRequest = await fetch(
+      `http://localhost:8080/friend/${userID}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    if (!rejectFriendRequest.ok) {
+      window.alert("something went wrong");
+      return;
+    }
+    container.innerText = "You reject the friend request";
   };
 }
