@@ -1,5 +1,14 @@
 import "/src/index.postcss";
 
-// import validateSession from "../lib/validateSession";
-//
-// window.addEventListener("load", validateSession);
+const btn: HTMLButtonElement | null =
+  document.querySelector("#btn-toggle-modal");
+const modal: HTMLDialogElement | null = document.querySelector("#modal");
+btn?.addEventListener("click", () => {
+  modal?.showModal();
+});
+const btnq: HTMLButtonElement | null =
+  document.querySelector("#btn-close-modal");
+  btnq?.addEventListener("click", () => {
+    modal?.close();
+  });
+
