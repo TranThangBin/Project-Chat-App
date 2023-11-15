@@ -4,7 +4,7 @@ import {
   generateRecievedFR,
   generateSentFR,
   generateStranger,
-} from "./loadFRTemplate";
+} from "./generateFRTemplate";
 import {
   createAcceptFRHandler,
   createAddFriendHandler,

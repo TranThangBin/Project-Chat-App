@@ -24,7 +24,9 @@ export function generateRecievedFR(friend: FriendModel) {
             alt=""
           />
           <div class="text-white">
-            <h2>${[friend.firstname, friend.lastname].join(" ")}</h2>
+            <h2>${[friend.firstname, friend.lastname, `#${friend.id}`].join(
+              " ",
+            )}</h2>
             <p class="text-[13px] italic">people you may know.</p>
           </div>
           <div
@@ -73,7 +75,11 @@ export function generateSentFR(friend: FriendModel) {
             alt=""
           />
           <div class="text-white">
-            <h2 class="">${[friend.firstname, friend.lastname].join(" ")}</h2>
+            <h2 class="">${[
+              friend.firstname,
+              friend.lastname,
+              `#${friend.id}`,
+            ].join(" ")}</h2>
             <p class="text-[13px] italic">people you may know.</p>
           </div>
           <button
@@ -110,7 +116,11 @@ export function generateStranger(friend: FriendModel) {
             alt=""
           />
           <div class="text-white">
-            <h2 class="">${[friend.firstname, friend.lastname].join(" ")}</h2>
+            <h2 class="">${[
+              friend.firstname,
+              friend.lastname,
+              `#${friend.id}`,
+            ].join(" ")}</h2>
             <p class="text-[13px] italic">people you may know.</p>
           </div>
           <button

@@ -24,7 +24,11 @@ export default makeAuthorizedRequest(async (token) => {
   }
   const profile = (await profileRequest.json()) as ProfileModel;
   if (fullNameElem !== null) {
-    fullNameElem.innerText = [profile.firstname, profile.lastname].join(" ");
+    fullNameElem.innerText = [
+      profile.firstname,
+      profile.lastname,
+      `#${profile.id}`,
+    ].join(" ");
   }
   if (sexElem !== null) {
     sexElem.innerText = profile.gender;

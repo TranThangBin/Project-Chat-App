@@ -32,6 +32,6 @@ func Authorize(ctx *gin.Context) {
 		})
 		return
 	}
-	ctx.Set("claims", &claims)
+	ctx.Set("claims", claims)
 	ctx.Next()
 }

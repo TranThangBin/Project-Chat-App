@@ -1,4 +1,5 @@
 type ProfileModel = {
+  id: number;
   firstname: string;
   lastname: string;
   gender: string;

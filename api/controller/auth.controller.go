@@ -27,7 +27,7 @@ type loginRequest struct {
 	Password string `json:"password" binding:"required"`
 }
 
-var accessTokenDuration = 20 * time.Minute
+var tokenDuration = 10 * time.Minute
 
 func Register(ctx *gin.Context) {
 	req := registerRequest{}
@@ -83,7 +83,7 @@ func Login(ctx *gin.Context) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
-	expiredTime := time.Now().Add(accessTokenDuration)
+	expiredTime := time.Now().Add(tokenDuration)
 	creds, err := service.UserToCreds(&result, expiredTime)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -115,8 +115,8 @@ func Refresh(ctx *gin.Context) {
 		})
 		return
 	}
-	expiredTime := time.Now().Add(accessTokenDuration)
-	newCreds, err := service.ClaimsToCreds(&claims, expiredTime)
+	expiredTime := time.Now().Add(tokenDuration)
+	newCreds, err := service.ClaimsToCreds(claims, expiredTime)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
@@ -149,5 +149,5 @@ func Profile(ctx *gin.Context) {
 		})
 		return
 	}
-	ctx.JSON(http.StatusOK, claims)
+	ctx.JSON(http.StatusOK, *claims)
 }

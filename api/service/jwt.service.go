@@ -9,16 +9,16 @@ import (
 )
 
 type Claims struct {
-	ID                   uint      `json:"id"`
-	Username             string    `json:"username"`
-	Gender               string    `json:"gender"`
-	FirstName            string    `json:"firstname"`
-	LastName             string    `json:"lastname"`
-	Email                string    `json:"email"`
-	PhoneNumber          string    `json:"phonenumber"`
-	BirthDay             time.Time `json:"birthday"`
-	CreatedAt            time.Time `json:"createdAt"`
-	jwt.RegisteredClaims `json:"-"`
+	ID          uint      `json:"id"`
+	Username    string    `json:"username"`
+	Gender      string    `json:"gender"`
+	FirstName   string    `json:"firstname"`
+	LastName    string    `json:"lastname"`
+	Email       string    `json:"email"`
+	PhoneNumber string    `json:"phonenumber"`
+	BirthDay    time.Time `json:"birthday"`
+	CreatedAt   time.Time `json:"createdAt"`
+	jwt.RegisteredClaims
 }
 
 type Credentials struct {
@@ -58,13 +58,13 @@ func ClaimsToCreds(claims *Claims, expirationTime time.Time) (Credentials, error
 	return Credentials{Jwt: tokenStr, ExpiredAt: expirationTime.UnixMilli()}, err
 }
 
-func TokenToClaims(tokenStr string) (Claims, error) {
+func TokenToClaims(tokenStr string) (*Claims, error) {
 	var claims Claims
 	_, err := jwt.ParseWithClaims(tokenStr, &claims, func(t *jwt.Token) (interface{}, error) {
 		return jwtKey, nil
 	})
 	if err != nil {
-		return Claims{}, err
+		return nil, err
 	}
-	return claims, nil
+	return &claims, nil
 }

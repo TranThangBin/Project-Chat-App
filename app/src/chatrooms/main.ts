@@ -1,8 +1,8 @@
 import "/src/index.postcss";
-import makeAuthorizedRequest from "../lib/makeAuthorizedRequest";
 import { closeModal, openModal } from "./modules/toggleModal";
+import loadChatRooms from "./modules/loadChatRooms";
 
-window.addEventListener("load", makeAuthorizedRequest());
+window.addEventListener("load", loadChatRooms);
 
 const btnOpenModal = document.querySelector("#btn-open-modal");
 const btnCloseModal = document.querySelector("#btn-close-modal");

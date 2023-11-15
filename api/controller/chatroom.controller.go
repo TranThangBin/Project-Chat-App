@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 
 	"api/model"
 	"api/service"
@@ -35,7 +34,7 @@ func GetAllChatRoom(ctx *gin.Context) {
 	chatRooms := []chatRoomData{}
 	if err := model.DB.
 		Model(&model.ChatRoom{}).
-		Select("chat_rooms.*, (user_id IS NULL) AS is_member").
+		Select("chat_rooms.*, (user_id IS NOT NULL) AS is_member").
 		Joins("LEFT JOIN user_chat_rooms ON chat_room_id = id AND user_id = ?", claims.ID).
 		Find(&chatRooms).
 		Error; err != nil {
@@ -49,39 +48,25 @@ func GetAllChatRoom(ctx *gin.Context) {
 }
 
 func CreateChatRoom(ctx *gin.Context) {
-	userClaims, exists := ctx.Get("claims")
-	if !exists {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"message": "something went wrong",
-		})
-		return
-	}
-	claims := userClaims.(*service.Claims)
 	req := createChatRoomRequest{}
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	chatRoom := model.ChatRoom{Name: req.Name}
-	if err := model.DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Create(&chatRoom).Error; err != nil {
-			return err
-		}
-		if err := tx.Create(&model.UserChatRoom{
-			UserID:     claims.ID,
-			ChatRoomID: chatRoom.ID,
-		}).Error; err != nil {
-			return err
-		}
-		return nil
-	}); err != nil {
+	if err := model.DB.Create(&chatRoom).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "something went wrong",
 			"error":   err.Error(),
 		})
 		return
 	}
-	ctx.Status(http.StatusOK)
+	ctx.JSON(http.StatusOK, chatRoomData{
+		ID:        chatRoom.ID,
+		Name:      chatRoom.Name,
+		CreatedAt: chatRoom.CreatedAt,
+		IsMember:  false,
+	})
 }
 
 func JoinChatRoom(ctx *gin.Context) {
