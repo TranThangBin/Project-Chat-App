@@ -7,7 +7,7 @@ import (
 	"api/middleware"
 )
 
-func InitFriendRoute(r *gin.Engine) {
+func initFriendRoute(r *gin.Engine) {
 	friendRoute := r.Group("friend")
 	friendRoute.Use(middleware.Authorize)
 	friendRoute.GET("", controller.GetAllRelationShip)

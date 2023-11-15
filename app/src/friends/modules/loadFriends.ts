@@ -1,6 +1,6 @@
 import FriendModel from "../../model/friend.model";
 import makeAuthorizedRequest from "../../lib/makeAuthorizedRequest";
-import loadFriendTemplate from "./loadFriendTemplate";
+import generateFriendTemplate from "./generateFriendTemplate";
 import createRemoveFriendHandler from "./handleRemoveFriend";
 
 const friendsList: HTMLUListElement | null =
@@ -28,7 +28,9 @@ export default makeAuthorizedRequest(async (token) => {
   const friends = (await friendRequest.json()) as FriendModel[];
   friends
     .filter((friend) => friend.status === "friend")
-    .forEach(loadFriendTemplate(friendsList));
+    .forEach((friend) =>
+      friendsList.appendChild(generateFriendTemplate(friend)),
+    );
   document.querySelectorAll("[data-btn-remove-friend]").forEach((btn) =>
     btn.addEventListener("click", createRemoveFriendHandler(token), {
       once: true,

@@ -30,7 +30,7 @@ type loginRequest struct {
 var accessTokenDuration = 20 * time.Minute
 
 func Register(ctx *gin.Context) {
-	var req = registerRequest{}
+	req := registerRequest{}
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -69,7 +69,7 @@ func Register(ctx *gin.Context) {
 }
 
 func Login(ctx *gin.Context) {
-	var req = loginRequest{}
+	req := loginRequest{}
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -97,7 +97,7 @@ func Refresh(ctx *gin.Context) {
 	header := strings.Split(authHeader, " ")
 	if len(header) != 2 {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "incorrect argument in the Authorization header",
+			"message": "invalid argument in the Authorization header",
 		})
 		return
 	}
@@ -131,7 +131,7 @@ func Profile(ctx *gin.Context) {
 	header := strings.Split(authHeader, " ")
 	if len(header) != 2 {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "incorrect argument in the Authorization header",
+			"message": "invalid argument in the Authorization header",
 		})
 		return
 	}

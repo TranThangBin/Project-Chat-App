@@ -22,8 +22,7 @@ func main() {
 	model.ConnectDatabase(username, password, database)
 	r := gin.Default()
 	r.Use(cors.New(corsConfig))
-	route.InitAuthRoute(r)
-	route.InitFriendRoute(r)
+	route.InitRoutes(r)
 	r.Run(":" + port)
 }
 

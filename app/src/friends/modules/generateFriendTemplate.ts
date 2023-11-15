@@ -1,6 +1,6 @@
 import FriendModel from "../../model/friend.model";
 
-export default (friend: FriendModel) => {
+export default  (friend: FriendModel) => {
   const listItem = document.createElement("li");
   listItem.classList.add(
     "my-3",
@@ -37,5 +37,5 @@ export default (friend: FriendModel) => {
             Remove Friend
           </button>
         `;
-  return listItem;
+        return listItem
 };

@@ -6,7 +6,7 @@ import (
 	"api/controller"
 )
 
-func InitAuthRoute(r *gin.Engine) {
+func initAuthRoute(r *gin.Engine) {
 	authRoute := r.Group("/auth")
 	authRoute.POST("/register", controller.Register)
 	authRoute.POST("/login", controller.Login)

@@ -1,6 +1,10 @@
 import FriendModel from "../../model/friend.model";
 import makeAuthorizedRequest from "../../lib/makeAuthorizedRequest";
-import { loadRecievedFR, loadSentFR, loadStranger } from "./loadFRTemplate";
+import {
+  generateRecievedFR,
+  generateSentFR,
+  generateStranger,
+} from "./loadFRTemplate";
 import {
   createAcceptFRHandler,
   createAddFriendHandler,
@@ -32,13 +36,17 @@ export default makeAuthorizedRequest(async (token) => {
   const friends = (await friendRequest.json()) as FriendModel[];
   friends
     .filter((friend) => friend.status === "recieved request")
-    .forEach(loadRecievedFR(friendRequestList));
+    .forEach((friend) =>
+      friendRequestList.appendChild(generateRecievedFR(friend)),
+    );
   friends
     .filter((friend) => friend.status === "sent request")
-    .forEach(loadSentFR(friendRequestList));
+    .forEach((friend) => friendRequestList.appendChild(generateSentFR(friend)));
   friends
     .filter((friend) => friend.status === "stranger")
-    .forEach(loadStranger(friendRequestList));
+    .forEach((friend) =>
+      friendRequestList.appendChild(generateStranger(friend)),
+    );
   document.querySelectorAll("[data-btn-add-friend]").forEach((btn) =>
     btn.addEventListener("click", createAddFriendHandler(token), {
       once: true,

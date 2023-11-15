@@ -1,24 +1,23 @@
 import FriendModel from "../../model/friend.model";
 
-export function loadRecievedFR(friendRequestList: HTMLUListElement) {
-  return (friend: FriendModel) => {
-    const listItem = document.createElement("li");
-    listItem.classList.add(
-      "my-3",
-      "flex",
-      "w-full",
-      "items-center",
-      "rounded-xl",
-      "border-[1px]",
-      "bg-[#4284]",
-      "p-3",
-      "text-black",
-      "transition",
-      "duration-100",
-      "hover:border-red-400",
-      "hover:bg-[#6f44c044]",
-    );
-    listItem.innerHTML = `
+export function generateRecievedFR(friend: FriendModel) {
+  const listItem = document.createElement("li");
+  listItem.classList.add(
+    "my-3",
+    "flex",
+    "w-full",
+    "items-center",
+    "rounded-xl",
+    "border-[1px]",
+    "bg-[#4284]",
+    "p-3",
+    "text-black",
+    "transition",
+    "duration-100",
+    "hover:border-red-400",
+    "hover:bg-[#6f44c044]",
+  );
+  listItem.innerHTML = `
           <img
             class="float-left mr-3 h-16 w-16 rounded-[50%] border-[2px]"
             src="/images/user.png"
@@ -47,29 +46,27 @@ export function loadRecievedFR(friendRequestList: HTMLUListElement) {
             </button>
           </div>
       `;
-    friendRequestList.appendChild(listItem);
-  };
+  return listItem;
 }
 
-export function loadSentFR(friendRequestList: HTMLUListElement) {
-  return (friend: FriendModel) => {
-    const listItem = document.createElement("li");
-    listItem.classList.add(
-      "my-3",
-      "flex",
-      "w-full",
-      "items-center",
-      "rounded-xl",
-      "border-[1px]",
-      "bg-[#4284]",
-      "p-3",
-      "text-black",
-      "transition",
-      "duration-100",
-      "hover:border-red-400",
-      "hover:bg-[#6f44c044]",
-    );
-    listItem.innerHTML = `
+export function generateSentFR(friend: FriendModel) {
+  const listItem = document.createElement("li");
+  listItem.classList.add(
+    "my-3",
+    "flex",
+    "w-full",
+    "items-center",
+    "rounded-xl",
+    "border-[1px]",
+    "bg-[#4284]",
+    "p-3",
+    "text-black",
+    "transition",
+    "duration-100",
+    "hover:border-red-400",
+    "hover:bg-[#6f44c044]",
+  );
+  listItem.innerHTML = `
           <img
             class="float-left mr-3 h-16 w-16 rounded-[50%] border-[2px]"
             src="/images/user.png"
@@ -86,29 +83,27 @@ export function loadSentFR(friendRequestList: HTMLUListElement) {
             Request Sent
           </button>
       `;
-    friendRequestList.appendChild(listItem);
-  };
+  return listItem;
 }
 
-export function loadStranger(friendRequestList: HTMLUListElement) {
-  return (friend: FriendModel) => {
-    const listItem = document.createElement("li");
-    listItem.classList.add(
-      "my-3",
-      "flex",
-      "w-full",
-      "items-center",
-      "rounded-xl",
-      "border-[1px]",
-      "bg-[#4284]",
-      "p-3",
-      "text-black",
-      "transition",
-      "duration-100",
-      "hover:border-red-400",
-      "hover:bg-[#6f44c044]",
-    );
-    listItem.innerHTML = `
+export function generateStranger(friend: FriendModel) {
+  const listItem = document.createElement("li");
+  listItem.classList.add(
+    "my-3",
+    "flex",
+    "w-full",
+    "items-center",
+    "rounded-xl",
+    "border-[1px]",
+    "bg-[#4284]",
+    "p-3",
+    "text-black",
+    "transition",
+    "duration-100",
+    "hover:border-red-400",
+    "hover:bg-[#6f44c044]",
+  );
+  listItem.innerHTML = `
           <img
             class="float-left mr-3 h-16 w-16 rounded-[50%] border-[2px]"
             src="/images/user.png"
@@ -126,6 +121,5 @@ export function loadStranger(friendRequestList: HTMLUListElement) {
             Add Friend
           </button>
       `;
-    friendRequestList.appendChild(listItem);
-  };
+  return listItem;
 }
