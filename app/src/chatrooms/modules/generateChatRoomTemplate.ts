@@ -1,10 +1,10 @@
+import makeAuthorizedRequest from "../../lib/makeAuthorizedRequest";
 import ChatRoomModel from "../../model/chatroom.model";
 import MessageModel from "../../model/message.model";
 import joinRoomHandler from "./roomHandler";
 
 export function generateJoinedChatRoom(
   chatRoom: ChatRoomModel,
-  token: string,
   chatZone: HTMLElement,
 ) {
   const listItem = document.createElement("li");
@@ -33,16 +33,18 @@ export function generateJoinedChatRoom(
   `;
   listItem.setAttribute("data-joined-room", "");
   listItem.setAttribute("data-chat-room-id", chatRoom.id + "");
-  listItem.addEventListener("click", () => {
-    chatZone.innerHTML = "";
-    chatZone.appendChild(generateChatZone(token, chatRoom.id, chatRoom.name));
-  });
+  listItem.addEventListener(
+    "click",
+    makeAuthorizedRequest((token) => {
+      chatZone.innerHTML = "";
+      chatZone.appendChild(generateChatZone(token, chatRoom.id, chatRoom.name));
+    }),
+  );
   return listItem;
 }
 
 export function generateNotJoinedChatRoom(
   chatRoom: ChatRoomModel,
-  token: string,
   joinedList: HTMLUListElement,
   notJoinedList: HTMLUListElement,
   chatZone: HTMLDivElement,
@@ -73,9 +75,11 @@ export function generateNotJoinedChatRoom(
   `;
   listItem.setAttribute("data-not-joined-room", "");
   listItem.setAttribute("data-chat-room-id", chatRoom.id + "");
-  listItem.addEventListener(
-    "click",
-    joinRoomHandler(token, chatRoom.name, chatZone, joinedList, notJoinedList),
+  listItem.onclick = joinRoomHandler(
+    chatRoom.name,
+    chatZone,
+    joinedList,
+    notJoinedList,
   );
   return listItem;
 }
@@ -137,17 +141,20 @@ export function generateChatZone(
       .querySelector("#message-container")
       ?.appendChild(generateMessage(JSON.parse(e.data)));
   });
-  div.querySelector("#form-send-message")?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const currentForm = e.currentTarget as HTMLFormElement;
-    const messageInfo = new FormData(currentForm);
-    roomSocket.send(
-      JSON.stringify({ token, ...Object.fromEntries(messageInfo.entries()) }),
-    );
-    currentForm.querySelectorAll("input").forEach((inp) => {
-      inp.value = "";
-    });
-  });
+  div.querySelector("#form-send-message")?.addEventListener(
+    "submit",
+    makeAuthorizedRequest((token, e) => {
+      e.preventDefault();
+      const currentForm = e.currentTarget as HTMLFormElement;
+      const messageInfo = new FormData(currentForm);
+      roomSocket.send(
+        JSON.stringify({ token, ...Object.fromEntries(messageInfo.entries()) }),
+      );
+      currentForm.querySelectorAll("input").forEach((inp) => {
+        inp.value = "";
+      });
+    }),
+  );
   return div;
 }
 

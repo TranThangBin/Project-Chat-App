@@ -1,12 +1,12 @@
+import makeAuthorizedRequest from "../../lib/makeAuthorizedRequest";
 import { generateChatZone } from "./generateChatRoomTemplate";
 export default (
-  token: string,
   roomName: string,
   chatZone: HTMLDivElement,
   joinedList: HTMLUListElement,
   notJoinedList: HTMLUListElement,
 ) =>
-  async function handleJoinRoom(e: Event) {
+  makeAuthorizedRequest(async function handleJoinRoom(token, e) {
     const currentChatRoom = e.currentTarget as HTMLLIElement;
     const roomID = currentChatRoom.getAttribute("data-chat-room-id");
     const joinRoomRequest = await fetch(
@@ -25,11 +25,10 @@ export default (
     }
     notJoinedList.removeChild(currentChatRoom);
     joinedList.appendChild(currentChatRoom);
-    currentChatRoom.removeEventListener("click", handleJoinRoom);
-    currentChatRoom.addEventListener("click", () => {
+    currentChatRoom.onclick = () => {
       chatZone.innerHTML = "";
       chatZone.appendChild(
         generateChatZone(token, parseInt(roomID ?? ""), roomName),
       );
-    });
-  };
+    };
+  });

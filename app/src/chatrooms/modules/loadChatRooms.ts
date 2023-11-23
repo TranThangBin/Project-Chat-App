@@ -42,12 +42,11 @@ export default makeAuthorizedRequest(async (token) => {
     const chatRoomData = JSON.parse(e.data) as ChatRoomModel;
     if (chatRoomData.isMember) {
       joinedRoomList.appendChild(
-        generateJoinedChatRoom(chatRoomData, token, chatRoom),
+        generateJoinedChatRoom(chatRoomData, chatRoom),
       );
     } else {
       const chatroom = generateNotJoinedChatRoom(
         chatRoomData,
-        token,
         joinedRoomList,
         notJoinedRoomList,
         chatRoom,
@@ -55,11 +54,17 @@ export default makeAuthorizedRequest(async (token) => {
       notJoinedRoomList.appendChild(chatroom);
     }
   });
-  formAddRoom?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const chatRoomInfo = new FormData(e.currentTarget as HTMLFormElement);
-    chatRoomSocket.send(
-      JSON.stringify({ token, ...Object.fromEntries(chatRoomInfo.entries()) }),
-    );
-  });
+  formAddRoom?.addEventListener(
+    "submit",
+    makeAuthorizedRequest((token, e) => {
+      e.preventDefault();
+      const chatRoomInfo = new FormData(e.currentTarget as HTMLFormElement);
+      chatRoomSocket.send(
+        JSON.stringify({
+          token,
+          ...Object.fromEntries(chatRoomInfo.entries()),
+        }),
+      );
+    }),
+  );
 });

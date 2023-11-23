@@ -143,13 +143,13 @@ func handleMessage(w http.ResponseWriter, r *http.Request) {
 		sendMessageReq := SendMessageRequest{}
 		if err := ws.ReadJSON(&sendMessageReq); err != nil {
 			log.Printf("parsing error error: %v\n", err)
-			delete(chatRoomClients, ws)
+			delete(chatClients, ws)
 			break
 		}
 		message, err := sendMessage(sendMessageReq, uint(roomID))
 		if err != nil {
 			log.Printf("server request error: %v\n", err)
-			delete(chatRoomClients, ws)
+			delete(chatClients, ws)
 			break
 		}
 		messageBroadCast <- message

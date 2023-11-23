@@ -5,7 +5,7 @@ import {
   setCredentials,
 } from "./useCredentials";
 
-export default (callback?: (token: string, e?: Event) => Promise<void>) =>
+export default (callback?: (token: string, e: Event) => Promise<void> | void) =>
   async (e: Event) => {
     let creds = getCredentials();
     if (creds === null) {

@@ -6,9 +6,9 @@ import {
   generateStranger,
 } from "./generateFRTemplate";
 import {
-  createAcceptFRHandler,
-  createAddFriendHandler,
-  createRejecctFRHandler,
+  handleAcceptFR,
+  handleAddFriend,
+  handleRejectFR,
 } from "./handleFriendRequest";
 
 const friendRequestList: HTMLUListElement | null =
@@ -48,7 +48,7 @@ export default makeAuthorizedRequest(async (token) => {
       friendRequestList.appendChild(generateStranger(friend)),
     );
   document.querySelectorAll("[data-btn-add-friend]").forEach((btn) =>
-    btn.addEventListener("click", createAddFriendHandler(token), {
+    btn.addEventListener("click", makeAuthorizedRequest(handleAddFriend), {
       once: true,
     }),
   );
@@ -60,11 +60,15 @@ export default makeAuthorizedRequest(async (token) => {
     const userID = container.getAttribute("data-user-id");
     acceptBtn?.addEventListener(
       "click",
-      createAcceptFRHandler(container as HTMLDivElement, userID, token),
+      makeAuthorizedRequest((token) =>
+        handleAcceptFR(container as HTMLDivElement, userID, token),
+      ),
     );
     rejectBtn?.addEventListener(
       "click",
-      createRejecctFRHandler(container as HTMLDivElement, userID, token),
+      makeAuthorizedRequest((token) =>
+        handleRejectFR(container as HTMLDivElement, userID, token),
+      ),
     );
   });
 });
